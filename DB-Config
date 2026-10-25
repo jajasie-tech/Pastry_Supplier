@@ -1,0 +1,13 @@
+<?php
+// Database configuration using PDO
+$host = "localhost";
+$username = "root";              // 
+$password = "";    
+$dbname = "pastry_supplier"; // the actual db
+$dsn = "mysql:host={$host};dbname={$dbname}";
+
+$pdo = new PDO($dsn, $username, $password);
+$pdo->exec("SET time_zone = '+08:00'");
+echo "Database connected successfully!";
+              
+?> 	
