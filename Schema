@@ -1,0 +1,17 @@
+CREATE DATABASE pastry_supplier;
+
+CREATE TABLE baker (
+	baker_id INT AUTO_INCREMENT PRIMARY KEY,
+	baker_name VARCHAR(100) NOT NULL,
+	contact_number VARCHAR(100) NOT NULL,
+	specialization_type VARCHAR(100) NOT NULL
+):
+
+CREATE TABLE baker (
+	client_id INT AUTO_INCREMENT PRIMARY KEY,
+	baker_id INT NOT NULL FOREIGN KEY,
+	client_name VARCHAR(100) NOT NULL,
+	contact_number VARCHAR(100) NOT NULL,
+	order_type VARCHAR(100) NOT NULL,
+	date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+):
