@@ -15,3 +15,29 @@ CREATE TABLE baker (
 	order_type VARCHAR(100) NOT NULL,
 	date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ):
+
+
+
+For displaying the audit record
+------------------------------------------------------
+ALTER TABLE baker
+ADD COLUMN date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN added_by VARCHAR(50) NULL AFTER date_added,
+ADD COLUMN last_updated_by VARCHAR(50) NULL AFTER added_by,
+ADD COLUMN last_updated TIMESTAMP NULL DEFAULT NULL AFTER last_updated_by;
+
+ALTER TABLE client
+ADD COLUMN added_by VARCHAR(50) NULL AFTER date_added,
+ADD COLUMN last_updated_by VARCHAR(50) NULL AFTER added_by,
+ADD COLUMN last_updated TIMESTAMP NULL DEFAULT NULL AFTER last_updated_by;
+
+
+to reset the data for better demo and testing 
+-----------------------------------------------------
+DELETE FROM client;
+DELETE FROM baker;
+DELETE FROM user_passwords;
+
+ALTER TABLE client AUTO_INCREMENT = 1;
+ALTER TABLE baker AUTO_INCREMENT = 1;
+ALTER TABLE user_passwords AUTO_INCREMENT = 1;
