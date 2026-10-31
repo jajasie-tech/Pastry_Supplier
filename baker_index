@@ -1,4 +1,21 @@
 <?php
+require_once 'core/model.php';
+require_once 'core/handleforms.php';
+
+if (!isset($_SESSION['username'])) {
+    header("Location: User/login.php");
+}
+?>
+
+<?php if (isset($_SESSION['username'])) { ?>
+    Hello! <?php echo $_SESSION['username']; ?>
+    <a href="core/handleForms.php?logoutUserA=1">Logout</a>
+<?php } else {
+    echo "<h1>No user logged in</h1>";
+} ?>
+
+
+<?php
 require_once 'Core/GOMEZ_Db_Config.php';
 require_once 'Core/model.php';
 
@@ -50,6 +67,10 @@ function e($value) {
         <th>Baker Name</th>
         <th>Contact Number</th>
         <th>Specialization Type</th>
+        <th>Date Added</th>
+        <th>Added By</th>
+        <th>Last Updated By</th>
+        <th>Last Updated</th>
         <th>Action</th>
     </tr>
 
@@ -59,6 +80,10 @@ function e($value) {
             <td><?= e($row['baker_name']) ?></td>
             <td><?= e($row['contact_number']) ?></td>
             <td><?= e($row['specialization_type']) ?></td>
+            <td><?= e($row['date_added']) ?></td>
+            <td><?= e($row['added_by']) ?></td>
+            <td><?= e($row['last_updated_by'] ?? 'Not yet updated') ?></td>
+            <td><?= e($row['last_updated'] ?? 'Not yet updated') ?></td>
             <td>
                 <p><a href="client_index.php">Manage All Clients</a></p>
                 <a href="baker_edit.php?baker_id=<?= e($row['baker_id']) ?>">
