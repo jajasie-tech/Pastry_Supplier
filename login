@@ -1,0 +1,41 @@
+<?php
+require_once '../core/model.php';
+require_once '../core/handleforms.php';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <?php if (isset($_SESSION['message'])) { ?>
+        <h1 style="color: red;">
+            <?php echo $_SESSION['message']; ?>
+        </h1>
+    <?php unset($_SESSION['message']); } ?>
+
+    <h1>Login Now!</h1>
+
+    <form action="../core/handleforms.php" method="POST">
+        <p>
+            <label for="username">Username</label>
+            <input type="text" name="username">
+        </p>
+
+        <p>
+            <label for="username">Password</label>
+            <input type="password" name="password">
+            <input type="submit" name="loginUserBtn">
+        </p>
+    </form>
+
+    <p>Don't have an account? 
+        <a href="register.php">Click here to register</a>
+    </p>
+
+</body>
+</html>
