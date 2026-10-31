@@ -31,9 +31,9 @@ if (isset($_POST['insertBakerBtn'])) {
     if (applicationInputsAreValid($fields)) {
 
         $query = insertBaker(
-            $pdo, $bakerName, $contactNumber,
-            $specializationType
-        );
+    $pdo, $bakerName, $contactNumber,
+    $specializationType, $_SESSION['username']  
+);
 
         if ($query) {
             header("Location: ../baker_index.php");
@@ -62,9 +62,10 @@ if (isset($_POST['updateBakerBtn'])) {
     if ($bakerID && applicationInputsAreValid($fields)) {
 
         $query = updateBaker(
-            $pdo, $bakerID, $bakerName,
-            $contactNumber, $specializationType
-        );
+    $pdo, $bakerID, $bakerName,
+    $contactNumber, $specializationType,
+    $_SESSION['username']
+);
 
         if ($query) {
             header("Location: ../baker_index.php");
@@ -113,9 +114,10 @@ if (isset($_POST['insertClientBtn'])) {
     if ($bakerID && applicationInputsAreValid($fields)) {
 
         $query = insertClient(
-            $pdo, $bakerID, $clientName,
-            $contactNumber, $location, $orderType
-        );
+    $pdo, $bakerID, $clientName,
+    $contactNumber, $location, $orderType,
+    $_SESSION['username']
+);
 
         if ($query) {
             header("Location: ../client_index.php?baker_id=" . $bakerID);
@@ -150,9 +152,10 @@ if (isset($_POST['updateClientBtn'])) {
         && applicationInputsAreValid($fields)) {
 
         $query = updateClient(
-            $pdo, $clientID, $bakerID, $clientName,
-            $contactNumber, $location, $orderType
-        );
+    $pdo, $clientID, $bakerID, $clientName,
+    $contactNumber, $location, $orderType,
+    $_SESSION['username']
+);
 
         if ($query) {
             header("Location: ../view_all.php?baker_id=" . $bakerID);
@@ -184,6 +187,57 @@ if (isset($_POST['deleteClientBtn'])) {
     }
 
     echo "Client deletion failed.";
+}
+
+
+if (isset($_POST['registerUserBtn'])) {
+
+    $username = $_POST['username'];
+    $password = sha1($_POST['password']);
+
+    if (!empty($username) && !empty($password)) {
+
+        $insertQuery = insertNewUser($pdo, $username, $password);
+
+        if ($insertQuery) {
+            header("Location: ../User/login.php");
+        } else {
+            header("Location: ../User/register.php");
+        }
+
+    } else {
+        $_SESSION['message'] = "Please make sure the input fields are not empty for registration!";
+        header("Location: ../User/login.php");
+        exit();
+    }
+}
+
+if (isset($_POST['loginUserBtn'])) {
+
+    $username = $_POST['username'];
+    $password = sha1($_POST['password']);
+
+    if (!empty($username) && !empty($password)) {
+
+        $loginQuery = loginUser($pdo, $username, $password);
+
+        if ($loginQuery) {
+            header("Location: ../baker_index.php");
+        } else {
+            header("Location: ../User/login.php");
+        }
+
+    } else {
+        $_SESSION['message'] = "Please make sure the input fields are not empty for the login!";
+        header("Location: ../User/login.php");
+        exit();
+    }
+}
+
+if (isset($_GET['logoutUserA'])) {
+    unset($_SESSION['username']);
+    header("Location: ../User/login.php");
+    exit();
 }
 
 ?>
